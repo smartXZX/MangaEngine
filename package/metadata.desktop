@@ -85,7 +85,7 @@ Comment[zh_TW]=簡單說明您的程式做什麼事情
 
 Icon=applications-system
 Type=Service
-ServiceTypes=Plasma/Applet
+ServiceTypes=Plasma/DataEngine
 
 
 X-KDE-Library=plasma_applet_mangaengine
@@ -99,8 +99,8 @@ X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
 
-X-Plasma-API=declarativeappletscript
-X-Plasma-MainScript=ui/main.qml
+X-Plasma-API=python
+X-Plasma-MainScript=code/main.py
 X-Plasma-Requires-FileDialog=Unused
 X-Plasma-Requires-LaunchApp=Unused
 X-Plasma-DefaultSize=200,300
