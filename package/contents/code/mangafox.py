@@ -52,21 +52,22 @@ def listUpdates(html):
 def parseItem(item):
 	""" Parsing data for one updated manga"""
 	manga = {}
-	manga['title'] = unicode(item.find('a').contents[0])
-	manga['descr_url'] = unicode(item.find('a').get('href'))
-	manga['date'] = unicode(item.find('em').contents[0])
+	title = unicode(item.find('a').contents[0])
+	descr_url = unicode(item.find('a').get('href'))
+	date = unicode(item.find('em').contents[0])
 	if item.find('span', attrs={'class' : 'hotch'}) is not None:
-		manga['hot_new'] = unicode('hot')
+		hot_new = unicode('hot')
 	elif item.find('span', attrs={'class' : 'newch'}) is not None:
-		manga['hot_new'] = unicode('new')
+		hot_new = unicode('new')
 	else:
-		manga['hot_new'] = None
+		hot_new = None
 	chapters_list = item.findAll('a', attrs = {'class' : 'chapter'})
-	manga['chapters'] = []
+	chapters = []
 	for chapter in chapters_list:
 		link = unicode(chapter.get('href'))
 		number = unicode(chapter.contents[0])
-		manga['chapters'].append((number, link))
+		chapters.append((number, link))
+	manga = {'title' : title, 'date' : date, 'descr_url' : descr_url, 'hot_new' : hot_new, 'chapters' : chapters}
 	return manga
 
 def parseUpdates():
@@ -98,10 +99,10 @@ def getDescription(url):
 if __name__ == "__main__":
 	mangalist = parseUpdates()
 	print mangalist
-	print "Title: %s\n" % mangalist[1]['title'] 
+	"""print "Title: %s\n" % mangalist[1]['title'] 
 	print "Updated: %s\n" % mangalist[1]['date']
 	print getDescription(mangalist[1]['descr_url'])
 	for i in mangalist[1]['chapters']:
 		chapter, url = i
 		print "Updated chapter: %s\n" % chapter
-	print str(mangalist[1]['chapters'])
+	print str(mangalist[1]['chapters'])"""

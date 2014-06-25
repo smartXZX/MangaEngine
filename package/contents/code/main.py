@@ -26,6 +26,7 @@ from PyKDE4.kdecore import *
 from PyKDE4 import plasmascript
 
 import mangafox
+mangalist = mangafox.parseUpdates()
 
 class MangaData(plasmascript.DataEngine):
 	#   Constructor, forward initialization to its superclass
@@ -42,7 +43,7 @@ class MangaData(plasmascript.DataEngine):
 	#   sources method
 	#   Used by applets to request what data source the DataEngine has
 	def sources(self):
-		sources = ["MangaFox.me"]
+		sources = [str(x) for x in range(len(mangalist))]
 		return sources
 
 	#   sourceRequestEvent method
@@ -53,13 +54,12 @@ class MangaData(plasmascript.DataEngine):
 
 	#   updateSourceEvent method
 	#   The main function for a DataEngine
-	def updateSourceEvent(self, source):
-		mangalist = mangafox.parseUpdates()
-		for item in mangalist:
-			self.setData(item['title'], "date", item['date'])
-			self.setData(item['title'], "description_url", item['descr_url'])
-			self.setData(item['title'], "hot_new", item['hot_new'])
-			self.setData(item['title'], "chapters", QVariant(item['chapters']))
+	def updateSourceEvent(self, item):
+		self.setData(item, 'title', mangalist[int(item)]['title'])
+		self.setData(item, 'date', mangalist[int(item)]['date'])
+		self.setData(item, 'descr_url', mangalist[int(item)]['descr_url'])
+		self.setData(item, 'hot_new', mangalist[int(item)]['hot_new'])
+		self.setData(item, 'chapters', QVariant(mangalist[int(item)]['chapters']))
 		return True
 
 	#   CreateDataEngine method
