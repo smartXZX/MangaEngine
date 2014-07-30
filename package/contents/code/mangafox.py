@@ -66,7 +66,7 @@ def parseItem(item):
 	for chapter in chapters_list:
 		link = unicode(chapter.get('href'))
 		number = unicode(chapter.contents[0])
-		chapters.append((number, link))
+		chapters.append({"chapter": number, "url" : link})
 	manga = {'title' : title, 'date' : date, 'descr_url' : descr_url, 'hot_new' : hot_new, 'chapters' : chapters}
 	return manga
 
